@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toonify AI — Video Cartoon Studio</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#151c32;--line:#2b3656;--text:#f4f6ff;--muted:#aab4d2;--accent:#9b7bff;--accent2:#55dfc2}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:radial-gradient(ellipse at top right,#27205a 0,transparent 38%),var(--bg);color:var(--text)}
+main{max-width:1000px;margin:auto;padding:28px 18px 60px}.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:52px}.logo{font-weight:800;font-size:1.2rem;letter-spacing:-.04em}.logo span{color:var(--accent2)}.pill{border:1px solid var(--line);border-radius:99px;padding:8px 12px;color:var(--muted);font-size:.8rem}
+.hero{text-align:center;margin-bottom:32px}.eyebrow{color:var(--accent2);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase}.hero h1{font-size:clamp(2.2rem,6vw,4rem);line-height:1.05;letter-spacing:-.055em;margin:14px 0}.hero h1 em{font-style:normal;color:#b9a5ff}.hero p{color:var(--muted);max-width:620px;margin:0 auto;line-height:1.7}
+.panel{background:rgba(21,28,50,.92);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 18px 70px #0003}.drop{border:1.5px dashed #59648a;border-radius:18px;padding:28px 16px;text-align:center;background:#10172a}.drop strong{display:block;font-size:1.1rem;margin:10px 0}.drop p{color:var(--muted);font-size:.9rem}.upload-icon{font-size:2rem}.btn{display:inline-flex;justify-content:center;align-items:center;border:0;border-radius:12px;padding:12px 18px;background:linear-gradient(100deg,var(--accent),#6f8cff);color:white;font-weight:800;cursor:pointer}.btn:disabled{opacity:.45;cursor:not-allowed}.controls{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}.field label{display:block;color:var(--muted);font-size:.85rem;margin-bottom:8px}.field select,.field input{width:100%;padding:12px;border-radius:11px;background:#0d1427;border:1px solid var(--line);color:var(--text)}.actions{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:22px}.status{color:var(--muted);font-size:.9rem;text-align:center;margin-top:16px;min-height:24px}.preview{margin-top:18px;display:none}.preview video{width:100%;max-height:360px;border-radius:14px;background:#05070d}.note{font-size:.82rem;color:var(--muted);line-height:1.6;text-align:center;margin:18px auto 0;max-width:680px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}.step{border:1px solid var(--line);border-radius:15px;padding:16px}.step b{display:block;margin:8px 0}.step span{color:var(--muted);font-size:.85rem;line-height:1.5}@media(max-width:650px){.controls,.steps{grid-template-columns:1fr}.nav{margin-bottom:38px}.panel{padding:14px}.hero{margin-bottom:24px}}
+</style>
+</head>
+<body>
+<main>
+  <div class="nav"><div class="logo">✨ Toonify<span>AI</span></div><div class="pill">BETA · Video cartoon studio</div></div>
+  <section class="hero">
+    <div class="eyebrow">Your video, reimagined</div>
+    <h1>Turn real videos into<br><em>3D cartoon worlds.</em></h1>
+    <p>Upload a clip, choose a look, and prepare it for AI-powered stylization. Start with a short test clip for the best results.</p>
+  </section>
+  <section class="panel">
+    <div class="drop">
+      <div class="upload-icon">🎬</div>
+      <strong>Choose a video to transform</strong>
+      <p>MP4, MOV or WebM · For the first test, use a short clip under 20 MB.</p>
+      <input id="videoFile" type="file" accept="video/mp4,video/quicktime,video/webm,video/*" hidden>
+      <button class="btn" id="chooseBtn">Choose video</button>
+      <div class="preview" id="preview"><video id="videoPreview" controls></video><p id="fileInfo"></p></div>
+    </div>
+    <div class="controls">
+      <div class="field"><label for="style">Cartoon style</label><select id="style"><option value="3d-animated">3D animated movie look</option><option value="anime">Anime</option><option value="2d-cartoon">2D cartoon</option><option value="comic">Comic book</option></select></div>
+      <div class="field"><label for="quality">Output quality</label><select id="quality"><option value="720p">720p · Balanced</option><option value="480p">480p · Faster test</option></select></div>
+    </div>
+    <div class="actions"><button class="btn" id="convertBtn" disabled>✨ Prepare cartoon video</button></div>
+    <div class="status" id="status" role="status">Choose a video to get started.</div>
+    <p class="note">Prototype mode: this page previews your upload. AI conversion is not connected yet. Connect a video-to-video AI provider on the backend before enabling real conversion.</p>
+  </section>
+  <section class="steps">
+    <div class="step">① <b>Upload</b><span>Pick a video you own or have permission to use.</span></div>
+    <div class="step">② <b>Stylize</b><span>Connect an AI video-to-video API for the cartoon conversion.</span></div>
+    <div class="step">③ <b>Download</b><span>Preview and download the generated result when the API is connected.</span></div>
+  </section>
+</main>
+<script>
+const fileInput=document.getElementById('videoFile'),chooseBtn=document.getElementById('chooseBtn'),convertBtn=document.getElementById('convertBtn'),statusEl=document.getElementById('status'),preview=document.getElementById('preview'),videoPreview=document.getElementById('videoPreview'),fileInfo=document.getElementById('fileInfo');
+let selectedFile=null,objectUrl=null;
+chooseBtn.addEventListener('click',()=>fileInput.click());
+fileInput.addEventListener('change',()=>{
+  const file=fileInput.files?.[0]; if(!file)return;
+  if(!file.type.startsWith('video/')){statusEl.textContent='Please choose a video file.';return;}
+  if(file.size>20*1024*1024){statusEl.textContent='For this prototype, please choose a video under 20 MB.';fileInput.value='';return;}
+  selectedFile=file; if(objectUrl)URL.revokeObjectURL(objectUrl); objectUrl=URL.createObjectURL(file);
+  videoPreview.src=objectUrl;preview.style.display='block';fileInfo.textContent=`${file.name} · ${(file.size/1024/1024).toFixed(1)} MB`;
+  convertBtn.disabled=false;statusEl.textContent='Video ready. Real AI conversion needs an API connection.';
+});
+convertBtn.addEventListener('click',()=>{
+  if(!selectedFile)return;
+  statusEl.textContent='Prototype only: upload preview works, but AI conversion is not connected yet. Connect a backend video-to-video API to enable this action.';
+});
+</script>
+</body>
+</html>
