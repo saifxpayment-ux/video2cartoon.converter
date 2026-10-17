@@ -7,157 +7,53 @@
 <title>VideoToCartoon — Free Cartoon Converter</title>
 
 <style>
-:root {
-  color-scheme: dark;
-  --bg: #0b1020;
-  --panel: #151e32;
-  --line: #303d5b;
-  --text: #f4f7ff;
-  --muted: #aab6cf;
-  --accent: #a99aff;
-  --mint: #70ebca;
-}
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  background: radial-gradient(ellipse at top, #25234b, var(--bg) 65%);
-  color: var(--text);
-  font: 16px/1.5 system-ui, Arial, sans-serif;
-}
-.wrap { width: min(1050px, 94%); margin: auto; }
-header { padding: 24px 0; font-weight: 800; font-size: 20px; }
-.logo { color: var(--mint); }
-.hero { text-align: center; padding: 24px 0 30px; }
-h1 { font-size: clamp(32px, 6vw, 58px); line-height: 1.1; margin: 14px 0; }
-.gradient {
-  color: var(--mint);
-}
-.hero p, .notice { color: var(--muted); max-width: 760px; margin: 12px auto; }
-.notice { font-size: 13px; }
-.layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 18px;
-}
-.panel {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  padding: 20px;
-  min-width: 0;
-}
-h2 { font-size: 19px; margin: 0 0 8px; }
-.sub, .tip { color: var(--muted); font-size: 13px; }
-.drop {
-  display: block;
-  text-align: center;
-  padding: 25px 12px;
-  border: 2px dashed #647297;
-  border-radius: 14px;
-  background: #0c1427;
-  cursor: pointer;
-}
-.drop strong, .drop small { display: block; }
-.drop small { color: var(--muted); margin-top: 7px; }
-#videoFile { display: none; }
-.fileinfo {
-  display: none;
-  overflow-wrap: anywhere;
-  margin-top: 10px;
-  padding: 10px;
-  background: #0b1222;
-  border-radius: 9px;
-}
-.settings {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-top: 18px;
-}
-label.field { display: block; font-size: 13px; }
-select, input[type=range] { width: 100%; margin-top: 7px; }
-select {
-  padding: 10px;
-  border-radius: 9px;
-  background: #0b1222;
-  color: white;
-  border: 1px solid var(--line);
-}
-input[type=range] { accent-color: var(--mint); }
-.actions, .resultrow { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-button, .download {
-  border: 0;
-  border-radius: 10px;
-  padding: 12px 15px;
-  font: inherit;
-  font-weight: 700;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-}
-.primary, .download {
-  background: linear-gradient(100deg, var(--accent), var(--mint));
-  color: #091321;
-  flex: 1;
-}
-.secondary { background: #293650; color: white; }
-button:disabled { opacity: .45; cursor: not-allowed; }
-.previewbox {
-  min-height: 180px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #050811;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  overflow: hidden;
-}
-.previewbox video, .previewbox canvas {
-  width: 100%;
-  height: auto;
-  max-height: 420px;
-  object-fit: contain;
-}
-.placeholder { text-align: center; padding: 30px 12px; color: #9aa8c4; }
-.previewlabel { color: var(--muted); font-size: 12px; margin: 14px 0 7px; }
-.progressline {
-  height: 10px;
-  border-radius: 20px;
-  overflow: hidden;
-  background: #080e1b;
-  margin: 9px 0;
-}
-.progressbar {
-  height: 100%;
-  width: 0;
-  background: linear-gradient(90deg, var(--accent), var(--mint));
-  transition: width .15s;
-}
-.row { display: flex; justify-content: space-between; gap: 8px; }
-.progressmeta { color: var(--muted); font-size: 12px; }
-.status { margin-top: 8px; font-size: 13px; min-height: 24px; }
-.adbox, .feature {
-  border: 1px dashed #46516d;
-  background: #111a2c;
-  border-radius: 13px;
-  padding: 16px;
-  margin: 18px 0;
-  text-align: center;
-  color: var(--muted);
-  font-size: 13px;
-}
-.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-.feature { text-align: left; border-style: solid; margin: 0 0 18px; }
-.feature strong { display: block; color: white; margin-bottom: 6px; }
-footer { padding: 8px 0 30px; color: var(--muted); font-size: 12px; }
-.hidden { display: none !important; }
-@media(max-width:760px) {
-  .layout, .features { grid-template-columns: 1fr; }
-}
-@media(max-width:420px) {
-  .settings { grid-template-columns: 1fr; }
-  .panel { padding: 14px; }
-}
+:root{color-scheme:dark;--bg:#0b1020;--panel:#151e32;--line:#303d5b;--text:#f4f7ff;--muted:#aab6cf;--accent:#a99aff;--mint:#70ebca}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at top,#25234b,var(--bg) 65%);color:var(--text);font:16px/1.5 system-ui,Arial,sans-serif}
+.wrap{width:min(1050px,94%);margin:auto}
+header{padding:24px 0;font-weight:800;font-size:20px}
+.logo{color:var(--mint)}
+.hero{text-align:center;padding:24px 0 30px}
+h1{font-size:clamp(32px,6vw,58px);line-height:1.1;margin:14px 0}
+.gradient{color:var(--mint)}
+.hero p,.notice{color:var(--muted);max-width:760px;margin:12px auto}
+.notice{font-size:13px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:20px;min-width:0}
+h2{font-size:19px;margin:0 0 8px}
+.sub,.tip{color:var(--muted);font-size:13px}
+.drop{display:block;text-align:center;padding:25px 12px;border:2px dashed #647297;border-radius:14px;background:#0c1427;cursor:pointer}
+.drop strong,.drop small{display:block}
+.drop small{color:var(--muted);margin-top:7px}
+#videoFile{display:none}
+.fileinfo{display:none;overflow-wrap:anywhere;margin-top:10px;padding:10px;background:#0b1222;border-radius:9px}
+.settings{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+label.field{display:block;font-size:13px}
+select,input[type=range]{width:100%;margin-top:7px}
+select{padding:10px;border-radius:9px;background:#0b1222;color:white;border:1px solid var(--line)}
+input[type=range]{accent-color:var(--mint)}
+.actions,.resultrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+button,.download{border:0;border-radius:10px;padding:12px 15px;font:inherit;font-weight:700;cursor:pointer;text-align:center;text-decoration:none}
+.primary,.download{background:linear-gradient(100deg,var(--accent),var(--mint));color:#091321;flex:1}
+.secondary{background:#293650;color:white}
+button:disabled{opacity:.45;cursor:not-allowed}
+.previewbox{min-height:180px;display:flex;justify-content:center;align-items:center;background:#050811;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.previewbox video,.previewbox canvas{width:100%;height:auto;max-height:420px;object-fit:contain}
+.placeholder{text-align:center;padding:30px 12px;color:#9aa8c4}
+.previewlabel{color:var(--muted);font-size:12px;margin:14px 0 7px}
+.progressline{height:10px;border-radius:20px;overflow:hidden;background:#080e1b;margin:9px 0}
+.progressbar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--mint));transition:width .15s}
+.row{display:flex;justify-content:space-between;gap:8px}
+.progressmeta{color:var(--muted);font-size:12px}
+.status{margin-top:8px;font-size:13px;min-height:24px;overflow-wrap:anywhere}
+.adbox,.feature{border:1px dashed #46516d;background:#111a2c;border-radius:13px;padding:16px;margin:18px 0;text-align:center;color:var(--muted);font-size:13px}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.feature{text-align:left;border-style:solid;margin:0 0 18px}
+.feature strong{display:block;color:white;margin-bottom:6px}
+footer{padding:8px 0 30px;color:var(--muted);font-size:12px}
+.hidden{display:none!important}
+@media(max-width:760px){.layout,.features{grid-template-columns:1fr}}
+@media(max-width:420px){.settings{grid-template-columns:1fr}.panel{padding:14px}}
 </style>
 </head>
 
@@ -167,518 +63,677 @@ footer { padding: 8px 0 30px; color: var(--muted); font-size: 12px; }
 <header><span class="logo">✦</span> VideoToCartoon / Free Studio</header>
 
 <section class="hero">
-  <div>✧ FREE BROWSER-BASED CONVERTER</div>
-  <h1>Turn Your Videos Into <span class="gradient">Cartoons</span></h1>
-  <p>Transform your videos with cartoon-style effects while preserving motion, details, and original audio where possible.</p>
-  <div class="notice">
-    Create a fresh visual style for your content. Copyright claims and platform policies may still apply.
-  </div>
+<div>✧ FREE BROWSER-BASED CONVERTER</div>
+<h1>Turn Your Videos Into <span class="gradient">Cartoons</span></h1>
+<p>Apply a cartoon-style effect locally in your browser. Processing speed and audio support depend on your device and browser.</p>
+<div class="notice">Your video is not uploaded to a server. Use videos you own or have permission to edit.</div>
 </section>
 
 <main class="layout">
 
 <section class="panel">
-  <h2>1. Choose your video</h2>
-  <p class="sub">Your video is processed locally in this browser. It is not uploaded to our server.</p>
+<h2>1. Choose your video</h2>
+<p class="sub">Processing happens on this device. Keep this tab open while converting.</p>
 
-  <label class="drop" id="dropZone" for="videoFile">
-    <div style="font-size:32px">⬆</div>
-    <strong>Tap to upload a video</strong>
-    <small>Choose a video supported by your browser.</small>
-    <small>Long videos depend on your device memory and performance.</small>
-  </label>
-  <input id="videoFile" type="file" accept="video/*">
-  <div class="fileinfo" id="fileInfo"></div>
+<label class="drop" id="dropZone" for="videoFile">
+<div style="font-size:32px">⬆</div>
+<strong>Tap to upload a video</strong>
+<small>MP4/H.264 or WebM usually work best.</small>
+<small>Long videos depend on your device memory and performance.</small>
+</label>
 
-  <div class="settings">
-    <label class="field">Cartoon style
-      <select id="style">
-        <option value="balanced">Balanced cartoon</option>
-        <option value="soft">Soft illustrated look</option>
-        <option value="bold">Bold outlines</option>
-      </select>
-    </label>
+<input id="videoFile" type="file" accept="video/*">
+<div class="fileinfo" id="fileInfo"></div>
 
-    <label class="field">Output resolution
-      <select id="quality">
-        <option value="720">Up to 720p</option>
-        <option value="540">Up to 540p — faster</option>
-        <option value="480">Up to 480p — lower memory</option>
-      </select>
-    </label>
+<div class="settings">
+<label class="field">Cartoon style
+<select id="style">
+<option value="balanced">Balanced cartoon</option>
+<option value="soft">Soft illustrated look</option>
+<option value="bold">Bold outlines</option>
+</select>
+</label>
 
-    <label class="field">Cartoon strength: <span id="strengthVal">55%</span>
-      <input id="strength" type="range" min="20" max="85" value="55">
-    </label>
+<label class="field">Output resolution
+<select id="quality">
+<option value="720">Up to 720p</option>
+<option value="540">Up to 540p — faster</option>
+<option value="480">Up to 480p — lower memory</option>
+</select>
+</label>
 
-    <label class="field">Detail preservation: <span id="detailVal">65%</span>
-      <input id="detail" type="range" min="35" max="90" value="65">
-    </label>
-  </div>
+<label class="field">Cartoon strength: <span id="strengthVal">55%</span>
+<input id="strength" type="range" min="20" max="85" value="55">
+</label>
 
-  <div class="actions">
-    <button class="primary" id="startBtn" disabled>✦ Start cartoon processing</button>
-    <button class="secondary" id="stopBtn" disabled>Stop</button>
-  </div>
+<label class="field">Detail preservation: <span id="detailVal">65%</span>
+<input id="detail" type="range" min="35" max="90" value="65">
+</label>
+</div>
 
-  <div style="margin-top:18px">
-    <div class="row"><strong>Processing progress</strong><strong id="percent">0%</strong></div>
-    <div class="progressline" id="progressTrack" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-      <div class="progressbar" id="progressBar"></div>
-    </div>
-    <div class="row progressmeta">
-      <span id="elapsed">00:00 / 00:00</span>
-      <span id="phase">Ready</span>
-    </div>
-    <div class="status" id="status">Choose a video to get started.</div>
-  </div>
+<div class="actions">
+<button class="primary" id="startBtn" disabled>✦ Start cartoon processing</button>
+<button class="secondary" id="stopBtn" disabled>Stop</button>
+</div>
 
-  <p class="tip">Keep this tab open during processing. If a long video fails, try a lower resolution.</p>
+<div style="margin-top:18px">
+<div class="row"><strong>Processing progress</strong><strong id="percent">0%</strong></div>
+<div class="progressline" id="progressTrack" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+<div class="progressbar" id="progressBar"></div>
+</div>
+<div class="row progressmeta">
+<span id="elapsed">00:00 / 00:00</span>
+<span id="phase">Ready</span>
+</div>
+<div class="status" id="status" aria-live="polite">Choose a video to get started.</div>
+</div>
+
+<p class="tip">If the video freezes or fails, try a shorter clip and select 480p.</p>
 </section>
 
 <section class="panel">
-  <h2>2. Preview & download</h2>
-  <p class="sub">Watch the video and see the cartoon effect while it processes.</p>
+<h2>2. Preview & download</h2>
+<p class="sub">The output preview updates during processing.</p>
 
-  <div class="previewlabel">VIDEO PREVIEW</div>
-  <div class="previewbox">
-    <div class="placeholder" id="videoPlaceholder">▶<br>Your video preview will appear here</div>
-    <video id="sourceVideo" controls playsinline class="hidden"></video>
-  </div>
+<div class="previewlabel">VIDEO PREVIEW</div>
+<div class="previewbox">
+<div class="placeholder" id="videoPlaceholder">▶<br>Your video preview will appear here</div>
+<video id="sourceVideo" controls playsinline preload="metadata" class="hidden"></video>
+</div>
 
-  <div class="previewlabel">CARTOON OUTPUT</div>
-  <div class="previewbox">
-    <div class="placeholder" id="outputPlaceholder">✧<br>Your cartoon output will appear here</div>
-    <canvas id="outputCanvas" class="hidden"></canvas>
-  </div>
+<div class="previewlabel">CARTOON OUTPUT</div>
+<div class="previewbox">
+<div class="placeholder" id="outputPlaceholder">✧<br>Your cartoon output will appear here</div>
+<canvas id="outputCanvas" class="hidden"></canvas>
+</div>
 
-  <div class="resultrow">
-    <a id="downloadLink" class="download hidden" download="cartoon-video.webm">⬇ Download cartoon video</a>
-    <button id="clearBtn" class="secondary" disabled>Clear video</button>
-  </div>
-  <p class="tip">Output is WebM when supported. Original audio capture depends on your browser.</p>
+<div class="resultrow">
+<a id="downloadLink" class="download hidden" download="cartoon-video.webm">⬇ Download cartoon video</a>
+<button id="clearBtn" class="secondary" disabled>Clear video</button>
+</div>
+
+<p class="tip">Output is WebM where supported. Original audio may not be capturable in every browser.</p>
 </section>
 
 </main>
 
 <div class="adbox">
-  <strong>ADVERTISEMENT SPACE</strong><br>
-  Ad network integration can be added after approval. This placeholder does not show paid ads or generate revenue.
+<strong>ADVERTISEMENT SPACE</strong><br>
+This is a placeholder only; it does not display ads or generate revenue.
 </div>
 
 <section class="features">
-  <div class="feature"><strong>🔒 Private by design</strong>Processing happens on your device.</div>
-  <div class="feature"><strong>🎞 Motion & audio</strong>Records the canvas in real time and attempts to keep original audio.</div>
-  <div class="feature"><strong>🆓 No paid API</strong>No paid API or server is used. Speed depends on your device.</div>
+<div class="feature"><strong>🔒 Private by design</strong>Video processing stays on your device.</div>
+<div class="feature"><strong>🎞 Motion & audio</strong>Records the filtered canvas in real time and attempts to retain audio.</div>
+<div class="feature"><strong>🆓 No paid API</strong>No paid API or server is used.</div>
 </section>
 
 <footer>
-  <p><strong>Important:</strong> This free version uses a real-time, non-AI cartoon-style filter. It does not create a full AI/Pixar-style transformation.</p>
-  <p>A cartoon effect does not guarantee that a video is copyright-free or that platforms will not issue claims. Upload only content you own or have permission to use.</p>
+<p><strong>Important:</strong> This is a real-time, non-AI cartoon-style filter, not a full AI/Pixar-style transformation.</p>
+<p>Processing speed, supported formats, audio capture, and maximum video length depend on the browser and device.</p>
 </footer>
 
 </div>
 
 <script>
 (() => {
-  const fileInput = document.getElementById('videoFile');
-  const dropZone = document.getElementById('dropZone');
-  const fileInfo = document.getElementById('fileInfo');
-  const video = document.getElementById('sourceVideo');
-  const canvas = document.getElementById('outputCanvas');
-  const ctx = canvas.getContext('2d', { willReadFrequently: true });
-  const startBtn = document.getElementById('startBtn');
-  const stopBtn = document.getElementById('stopBtn');
-  const clearBtn = document.getElementById('clearBtn');
-  const status = document.getElementById('status');
-  const percent = document.getElementById('percent');
-  const progressBar = document.getElementById('progressBar');
-  const progressTrack = document.getElementById('progressTrack');
-  const elapsed = document.getElementById('elapsed');
-  const phase = document.getElementById('phase');
-  const downloadLink = document.getElementById('downloadLink');
-  const videoPlaceholder = document.getElementById('videoPlaceholder');
-  const outputPlaceholder = document.getElementById('outputPlaceholder');
-  const strengthInput = document.getElementById('strength');
-  const detailInput = document.getElementById('detail');
-  const strengthVal = document.getElementById('strengthVal');
-  const detailVal = document.getElementById('detailVal');
-  const qualitySelect = document.getElementById('quality');
-  const styleSelect = document.getElementById('style');
+'use strict';
 
-  let objectUrl = null;
-  let downloadUrl = null;
-  let recorder = null;
-  let chunks = [];
-  let animationId = null;
-  let processing = false;
-  let stopRequested = false;
-  let lastDraw = 0;
-  let width = 0, height = 0;
-  let audioAdded = false;
+const $ = id => document.getElementById(id);
 
-  function formatTime(seconds) {
-    if (!Number.isFinite(seconds) || seconds < 0) seconds = 0;
-    seconds = Math.floor(seconds);
-    return String(Math.floor(seconds / 60)).padStart(2, '0') + ':' +
-      String(seconds % 60).padStart(2, '0');
-  }
+const fileInput=$('videoFile');
+const dropZone=$('dropZone');
+const fileInfo=$('fileInfo');
+const video=$('sourceVideo');
+const canvas=$('outputCanvas');
+const ctx=canvas.getContext('2d',{willReadFrequently:true});
+const startBtn=$('startBtn');
+const stopBtn=$('stopBtn');
+const clearBtn=$('clearBtn');
+const status=$('status');
+const percent=$('percent');
+const progressBar=$('progressBar');
+const progressTrack=$('progressTrack');
+const elapsed=$('elapsed');
+const phase=$('phase');
+const downloadLink=$('downloadLink');
+const videoPlaceholder=$('videoPlaceholder');
+const outputPlaceholder=$('outputPlaceholder');
+const strengthInput=$('strength');
+const detailInput=$('detail');
+const strengthVal=$('strengthVal');
+const detailVal=$('detailVal');
+const qualitySelect=$('quality');
+const styleSelect=$('style');
 
-  function setProgress(value) {
-    const n = Math.max(0, Math.min(100, Math.floor(value || 0)));
-    percent.textContent = n + '%';
-    progressBar.style.width = n + '%';
-    progressTrack.setAttribute('aria-valuenow', String(n));
-  }
+let objectUrl=null;
+let downloadUrl=null;
+let recorder=null;
+let chunks=[];
+let animationId=null;
+let processing=false;
+let stopRequested=false;
+let lastDraw=0;
+let width=0;
+let height=0;
+let audioAdded=false;
+let activeStream=null;
+let runId=0;
 
-  function setStatus(message, phaseText) {
-    status.textContent = message;
-    if (phaseText) phase.textContent = phaseText;
-  }
+const frameCanvas=document.createElement('canvas');
+const frameCtx=frameCanvas.getContext('2d',{willReadFrequently:true});
 
-  function setBusy(busy) {
-    processing = busy;
-    startBtn.disabled = busy || !video.src;
-    stopBtn.disabled = !busy;
-    clearBtn.disabled = busy || !video.src;
-    fileInput.disabled = busy;
-    strengthInput.disabled = busy;
-    detailInput.disabled = busy;
-    qualitySelect.disabled = busy;
-    styleSelect.disabled = busy;
-    dropZone.style.pointerEvents = busy ? 'none' : '';
-  }
+function formatTime(s){
+ if(!Number.isFinite(s)||s<0)s=0;
+ s=Math.floor(s);
+ return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+}
 
-  function releaseDownload() {
-    if (downloadUrl) URL.revokeObjectURL(downloadUrl);
-    downloadUrl = null;
-    downloadLink.removeAttribute('href');
-    downloadLink.classList.add('hidden');
-  }
+function setProgress(v){
+ const n=Math.max(0,Math.min(100,Math.floor(Number(v)||0)));
+ percent.textContent=n+'%';
+ progressBar.style.width=n+'%';
+ progressTrack.setAttribute('aria-valuenow',String(n));
+}
 
-  function loadFile(file) {
-    if (!file || processing) return;
-    if (!file.type.startsWith('video/')) {
-      setStatus('Please choose a video file.', 'Invalid file');
-      return;
+function setStatus(m,p){
+ status.textContent=m;
+ if(p)phase.textContent=p;
+}
+
+function setBusy(b){
+ processing=b;
+ startBtn.disabled=b||!video.src||video.readyState<1;
+ stopBtn.disabled=!b;
+ clearBtn.disabled=b||!video.src;
+ fileInput.disabled=b;
+ strengthInput.disabled=b;
+ detailInput.disabled=b;
+ qualitySelect.disabled=b;
+ styleSelect.disabled=b;
+ dropZone.style.pointerEvents=b?'none':'';
+}
+
+function releaseDownload(){
+ if(downloadUrl)URL.revokeObjectURL(downloadUrl);
+ downloadUrl=null;
+ downloadLink.removeAttribute('href');
+ downloadLink.classList.add('hidden');
+}
+
+function loadFile(file){
+ if(!file||processing)return;
+
+ if(!file.type.startsWith('video/')){
+  setStatus('Please choose a video file.','Invalid file');
+  return;
+ }
+
+ video.pause();
+
+ if(objectUrl)URL.revokeObjectURL(objectUrl);
+ objectUrl=URL.createObjectURL(file);
+
+ video.src=objectUrl;
+ video.load();
+ video.classList.remove('hidden');
+ videoPlaceholder.classList.add('hidden');
+
+ releaseDownload();
+
+ fileInfo.style.display='block';
+ fileInfo.textContent=file.name+' • '+(file.size/1048576).toFixed(1)+' MB';
+
+ canvas.classList.add('hidden');
+ outputPlaceholder.classList.remove('hidden');
+
+ startBtn.disabled=true;
+ clearBtn.disabled=false;
+ setProgress(0);
+ elapsed.textContent='00:00 / 00:00';
+ setStatus('Loading video metadata…','Loading');
+}
+
+fileInput.addEventListener('change',()=>{
+ loadFile(fileInput.files&&fileInput.files[0]);
+});
+
+dropZone.addEventListener('dragover',e=>{
+ e.preventDefault();
+ dropZone.style.borderColor='#70ebca';
+});
+
+dropZone.addEventListener('dragleave',()=>{
+ dropZone.style.borderColor='';
+});
+
+dropZone.addEventListener('drop',e=>{
+ e.preventDefault();
+ dropZone.style.borderColor='';
+ if(e.dataTransfer.files.length)loadFile(e.dataTransfer.files[0]);
+});
+
+video.addEventListener('loadedmetadata',()=>{
+ if(video.videoWidth>0&&video.videoHeight>0){
+  startBtn.disabled=processing;
+  elapsed.textContent='00:00 / '+formatTime(video.duration);
+  setStatus('Video ready. Choose your settings and start.','Ready');
+ }
+});
+
+video.addEventListener('error',()=>{
+ startBtn.disabled=true;
+ setStatus('Could not read this video. Try MP4/H.264 or WebM in an updated Chrome browser.','Video error');
+});
+
+strengthInput.addEventListener('input',()=>{
+ strengthVal.textContent=strengthInput.value+'%';
+});
+
+detailInput.addEventListener('input',()=>{
+ detailVal.textContent=detailInput.value+'%';
+});
+
+function setupCanvas(){
+ const maxWidth=Number(qualitySelect.value)||720;
+ const scale=Math.min(1,maxWidth/video.videoWidth);
+
+ width=Math.max(2,Math.floor(video.videoWidth*scale/2)*2);
+ height=Math.max(2,Math.floor(video.videoHeight*scale/2)*2);
+
+ canvas.width=width;
+ canvas.height=height;
+ frameCanvas.width=width;
+ frameCanvas.height=height;
+
+ canvas.classList.remove('hidden');
+ outputPlaceholder.classList.add('hidden');
+}
+
+function drawCartoonFrame(){
+ if(video.readyState<2||!width||!height)return false;
+
+ frameCtx.drawImage(video,0,0,width,height);
+
+ const image=frameCtx.getImageData(0,0,width,height);
+ const data=image.data;
+ const original=new Uint8ClampedArray(data);
+
+ const strength=Number(strengthInput.value)/100;
+ const detail=Number(detailInput.value)/100;
+ const style=styleSelect.value;
+
+ const levels=Math.max(5,Math.round(15-strength*8+detail*4));
+ const threshold=style==='bold'?20:style==='soft'?42:31;
+ const step=4;
+
+ for(let y=0;y<height;y+=step){
+  for(let x=0;x<width;x+=step){
+
+   const i=(y*width+x)*4;
+   const r=original[i];
+   const g=original[i+1];
+   const b=original[i+2];
+   const lum=.299*r+.587*g+.114*b;
+   const q=256/levels;
+
+   const mix=(style==='soft'?.28:.48)+strength*.25;
+
+   const qr=r*(1-mix)+Math.round(r/q)*q*mix;
+   const qg=g*(1-mix)+Math.round(g/q)*q*mix;
+   const qb=b*(1-mix)+Math.round(b/q)*q*mix;
+
+   const ri=(y*width+Math.min(width-1,x+step))*4;
+   const di=(Math.min(height-1,y+step)*width+x)*4;
+
+   const lr=.299*original[ri]+.587*original[ri+1]+.114*original[ri+2];
+   const ld=.299*original[di]+.587*original[di+1]+.114*original[di+2];
+
+   const edge=Math.abs(lum-lr)+Math.abs(lum-ld);
+   const line=Math.max(0,Math.min(.7,(edge-threshold)/100))*(style==='bold'?.9:.6)*strength;
+   const preserve=detail*.25;
+
+   for(let dy=0;dy<step&&y+dy<height;dy++){
+    for(let dx=0;dx<step&&x+dx<width;dx++){
+     const j=((y+dy)*width+x+dx)*4;
+
+     data[j]=qr*(1-line)*(1-preserve)+original[j]*preserve;
+     data[j+1]=qg*(1-line)*(1-preserve)+original[j+1]*preserve;
+     data[j+2]=qb*(1-line)*(1-preserve)+original[j+2]*preserve;
+     data[j+3]=original[j+3];
     }
-    if (objectUrl) URL.revokeObjectURL(objectUrl);
-    releaseDownload();
-    objectUrl = URL.createObjectURL(file);
-    video.src = objectUrl;
-    video.load();
-    video.classList.remove('hidden');
-    videoPlaceholder.classList.add('hidden');
-    fileInfo.style.display = 'block';
-    fileInfo.textContent = file.name + ' • ' + (file.size / 1048576).toFixed(1) + ' MB';
-    canvas.classList.add('hidden');
-    outputPlaceholder.classList.remove('hidden');
-    startBtn.disabled = true;
-    clearBtn.disabled = false;
-    setProgress(0);
-    setStatus('Loading video metadata…', 'Loading');
+   }
+  }
+ }
+
+ ctx.putImageData(image,0,0);
+ return true;
+}
+
+function pickMimeType(){
+ if(!window.MediaRecorder)return '';
+
+ return [
+  'video/webm;codecs=vp9,opus',
+  'video/webm;codecs=vp8,opus',
+  'video/webm'
+ ].find(t=>MediaRecorder.isTypeSupported(t))||'';
+}
+
+function cleanupStream(){
+ if(activeStream){
+  activeStream.getTracks().forEach(t=>{
+   try{t.stop()}catch(_){}
+  });
+  activeStream=null;
+ }
+}
+
+function finishRecording(myRun){
+ if(myRun!==runId)return;
+
+ if(animationId)cancelAnimationFrame(animationId);
+ animationId=null;
+ cleanupStream();
+ video.pause();
+ video.muted=false;
+
+ if(stopRequested){
+  setBusy(false);
+  setProgress(0);
+  setStatus('Processing stopped. You can try again with a shorter video or lower resolution.','Stopped');
+  return;
+ }
+
+ const blob=new Blob(chunks,{type:recorder?.mimeType||'video/webm'});
+
+ if(!blob.size){
+  setBusy(false);
+  setStatus('No output was created. Try a shorter video or a different browser.','Failed');
+  return;
+ }
+
+ releaseDownload();
+
+ downloadUrl=URL.createObjectURL(blob);
+ downloadLink.href=downloadUrl;
+ downloadLink.download='cartoon-video.webm';
+ downloadLink.classList.remove('hidden');
+
+ setProgress(100);
+ elapsed.textContent=formatTime(video.duration)+' / '+formatTime(video.duration);
+ setBusy(false);
+
+ setStatus('Done! Your cartoon video is ready.'+(audioAdded?' Audio track was captured.':' Audio capture was unavailable in this browser.'),'Complete');
+}
+
+function fail(message,myRun=runId){
+ if(myRun!==runId)return;
+
+ if(animationId)cancelAnimationFrame(animationId);
+ animationId=null;
+ video.pause();
+ video.muted=false;
+
+ if(recorder&&recorder.state!=='inactive'){
+  stopRequested=true;
+  try{
+   recorder.stop();
+  }catch(_){
+   cleanupStream();
+   setBusy(false);
+   setStatus(message,'Failed');
+  }
+ }else{
+  cleanupStream();
+  setBusy(false);
+  setStatus(message,'Failed');
+ }
+}
+
+function tick(now,myRun){
+ if(!processing||myRun!==runId)return;
+
+ try{
+  if(now-lastDraw>=80){
+   drawCartoonFrame();
+   lastDraw=now;
   }
 
-  fileInput.addEventListener('change', () => {
-    loadFile(fileInput.files && fileInput.files[0]);
-  });
+  if(Number.isFinite(video.duration)&&video.duration>0){
+   setProgress(Math.min(99,video.currentTime/video.duration*100));
+   elapsed.textContent=formatTime(video.currentTime)+' / '+formatTime(video.duration);
+  }
+ }catch(e){
+  fail('Frame processing failed: '+(e.message||'try a lower resolution.'),myRun);
+  return;
+ }
 
-  dropZone.addEventListener('dragover', e => {
-    e.preventDefault();
-    dropZone.style.borderColor = '#70ebca';
-  });
-  dropZone.addEventListener('dragleave', () => dropZone.style.borderColor = '');
-  dropZone.addEventListener('drop', e => {
-    e.preventDefault();
-    dropZone.style.borderColor = '';
-    if (e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
-  });
+ animationId=requestAnimationFrame(t=>tick(t,myRun));
+}
 
-  video.addEventListener('loadedmetadata', () => {
-    startBtn.disabled = false;
-    elapsed.textContent = '00:00 / ' + formatTime(video.duration);
-    setStatus('Video ready. Choose your settings and start.', 'Ready');
-  });
+function waitForSeek(target,myRun){
+ return new Promise((resolve,reject)=>{
+  if(myRun!==runId)return reject(new Error('Processing cancelled.'));
 
-  video.addEventListener('error', () => {
-    startBtn.disabled = true;
-    setStatus('This video format is not supported. Try MP4/H.264 or WebM.', 'Video error');
-  });
+  let settled=false;
 
-  strengthInput.addEventListener('input', () => {
-    strengthVal.textContent = strengthInput.value + '%';
-  });
-  detailInput.addEventListener('input', () => {
-    detailVal.textContent = detailInput.value + '%';
-  });
+  const cleanup=()=>{
+   clearTimeout(timer);
+   video.removeEventListener('seeked',onSeeked);
+   video.removeEventListener('error',onError);
+  };
 
-  const frameCanvas = document.createElement('canvas');
-  const frameCtx = frameCanvas.getContext('2d', { willReadFrequently: true });
+  const done=()=>{
+   if(settled)return;
+   settled=true;
+   cleanup();
+   resolve();
+  };
 
-  function setupCanvas() {
-    const maxWidth = Number(qualitySelect.value) || 720;
-    const scale = Math.min(1, maxWidth / video.videoWidth);
-    width = Math.max(2, Math.floor(video.videoWidth * scale / 2) * 2);
-    height = Math.max(2, Math.floor(video.videoHeight * scale / 2) * 2);
-    canvas.width = width;
-    canvas.height = height;
-    frameCanvas.width = width;
-    frameCanvas.height = height;
-    canvas.classList.remove('hidden');
-    outputPlaceholder.classList.add('hidden');
+  const onSeeked=()=>{
+   if(Math.abs(video.currentTime-target)<0.15)done();
+  };
+
+  const onError=()=>{
+   if(settled)return;
+   settled=true;
+   cleanup();
+   reject(new Error('The browser could not decode this video.'));
+  };
+
+  const timer=setTimeout(()=>{
+   if(settled)return;
+   settled=true;
+   cleanup();
+
+   if(video.readyState>=2&&Math.abs(video.currentTime-target)<0.25){
+    resolve();
+   }else{
+    reject(new Error('Timed out while seeking to the first video frame. Try another video format.'));
+   }
+  },8000);
+
+  video.addEventListener('seeked',onSeeked);
+  video.addEventListener('error',onError);
+
+  if(Math.abs(video.currentTime-target)<0.01&&video.readyState>=2){
+   done();
+   return;
   }
 
-  function drawCartoonFrame() {
-    if (video.readyState < 2 || !width || !height) return;
-    frameCtx.drawImage(video, 0, 0, width, height);
-    const image = frameCtx.getImageData(0, 0, width, height);
-    const data = image.data;
-    const original = new Uint8ClampedArray(data);
-    const strength = Number(strengthInput.value) / 100;
-    const detail = Number(detailInput.value) / 100;
-    const style = styleSelect.value;
-    const levels = Math.max(5, Math.round(15 - strength * 8 + detail * 4));
-    const threshold = style === 'bold' ? 20 : style === 'soft' ? 42 : 31;
-    const step = 4;
+  video.currentTime=target;
+ });
+}
 
-    for (let y = 0; y < height; y += step) {
-      for (let x = 0; x < width; x += step) {
-        const i = (y * width + x) * 4;
-        const r = original[i], g = original[i + 1], b = original[i + 2];
-        const lum = .299 * r + .587 * g + .114 * b;
-        const q = 256 / levels;
-        const mix = (style === 'soft' ? .28 : .48) + strength * .25;
-        const qr = r * (1 - mix) + Math.round(r / q) * q * mix;
-        const qg = g * (1 - mix) + Math.round(g / q) * q * mix;
-        const qb = b * (1 - mix) + Math.round(b / q) * q * mix;
-        const ri = (y * width + Math.min(width - 1, x + step)) * 4;
-        const di = (Math.min(height - 1, y + step) * width + x) * 4;
-        const lr = .299 * original[ri] + .587 * original[ri + 1] + .114 * original[ri + 2];
-        const ld = .299 * original[di] + .587 * original[di + 1] + .114 * original[di + 2];
-        const edge = Math.abs(lum - lr) + Math.abs(lum - ld);
-        const line = Math.max(0, Math.min(.7, (edge - threshold) / 100)) *
-          (style === 'bold' ? .9 : .6) * strength;
+async function startProcessing(){
+ if(!video.src||processing)return;
 
-        for (let dy = 0; dy < step && y + dy < height; dy++) {
-          for (let dx = 0; dx < step && x + dx < width; dx++) {
-            const j = ((y + dy) * width + x + dx) * 4;
-            const preserve = detail * .25;
-            data[j] = qr * (1 - line) * (1 - preserve) + original[j] * preserve;
-            data[j + 1] = qg * (1 - line) * (1 - preserve) + original[j + 1] * preserve;
-            data[j + 2] = qb * (1 - line) * (1 - preserve) + original[j + 2] * preserve;
-            data[j + 3] = original[j + 3];
-          }
-        }
-      }
-    }
-    ctx.putImageData(image, 0, 0);
+ if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream){
+  setStatus('This browser cannot record canvas video. Try an updated Chrome browser.','Unsupported');
+  return;
+ }
+
+ if(!Number.isFinite(video.duration)||video.duration<=0){
+  setStatus('Video duration is not ready yet. Wait for the video to finish loading.','Not ready');
+  return;
+ }
+
+ const myRun=++runId;
+
+ try{
+  setBusy(true);
+  stopRequested=false;
+  chunks=[];
+  audioAdded=false;
+  lastDraw=0;
+  setProgress(0);
+  releaseDownload();
+  setStatus('Preparing canvas and video…','Preparing');
+
+  setupCanvas();
+  video.pause();
+
+  await waitForSeek(0,myRun);
+
+  if(myRun!==runId)return;
+
+  if(!drawCartoonFrame()){
+   throw new Error('The first video frame is not ready. Wait a moment and try again.');
   }
 
-  function tick(now) {
-    if (!processing) return;
-    if (now - lastDraw >= 30) {
-      try {
-        drawCartoonFrame();
-        lastDraw = now;
-      } catch (e) {
-        fail('Could not process a frame. Try a lower resolution.');
-        return;
-      }
-    }
-    if (Number.isFinite(video.duration) && video.duration > 0) {
-      setProgress(Math.min(99, video.currentTime / video.duration * 100));
-      elapsed.textContent = formatTime(video.currentTime) + ' / ' + formatTime(video.duration);
-    }
-    animationId = requestAnimationFrame(tick);
+  const stream=canvas.captureStream(15);
+  activeStream=stream;
+
+  const captureAudio=video.captureStream||video.mozCaptureStream;
+
+  if(captureAudio){
+   try{
+    const sourceStream=captureAudio.call(video);
+
+    sourceStream.getAudioTracks().forEach(track=>{
+     stream.addTrack(track);
+     audioAdded=true;
+    });
+   }catch(_){
+    audioAdded=false;
+   }
   }
 
-  function pickMimeType() {
-    if (!window.MediaRecorder) return '';
-    const types = [
-      'video/webm;codecs=vp9,opus',
-      'video/webm;codecs=vp8,opus',
-      'video/webm'
-    ];
-    return types.find(t => MediaRecorder.isTypeSupported(t)) || '';
+  const mimeType=pickMimeType();
+  recorder=new MediaRecorder(stream,mimeType?{mimeType}:undefined);
+
+  recorder.ondataavailable=e=>{
+   if(e.data&&e.data.size)chunks.push(e.data);
+  };
+
+  recorder.onerror=()=>{
+   fail('Recording failed. Try a shorter video or lower resolution.',myRun);
+  };
+
+  recorder.onstop=()=>{
+   finishRecording(myRun);
+  };
+
+  video.onended=()=>{
+   if(myRun===runId&&processing&&recorder&&recorder.state!=='inactive'){
+    if(animationId)cancelAnimationFrame(animationId);
+    animationId=null;
+
+    try{drawCartoonFrame()}catch(_){}
+
+    try{
+     recorder.stop();
+    }catch(e){
+     fail('Could not finish the recording.',myRun);
+    }
+   }
+  };
+
+  recorder.start(500);
+  video.muted=false;
+
+  setStatus('Starting playback and frame processing…','Starting');
+
+  await video.play();
+
+  if(myRun!==runId)return;
+
+  setStatus('Processing video frames. Keep this tab open.','Processing');
+  animationId=requestAnimationFrame(t=>tick(t,myRun));
+
+ }catch(e){
+  fail(e.message||'Could not start processing. Try a shorter video.',myRun);
+ }
+}
+
+function stopProcessing(){
+ if(!processing)return;
+
+ stopRequested=true;
+ runId++;
+
+ if(animationId)cancelAnimationFrame(animationId);
+ animationId=null;
+
+ video.pause();
+ video.onended=null;
+
+ if(recorder&&recorder.state!=='inactive'){
+  try{
+   recorder.stop();
+  }catch(_){
+   cleanupStream();
+   setBusy(false);
+   setStatus('Processing stopped.','Stopped');
   }
+ }else{
+  cleanupStream();
+  setBusy(false);
+  setStatus('Processing stopped.','Stopped');
+ }
 
-  async function startProcessing() {
-    if (!video.src || processing) return;
-    if (!window.MediaRecorder || !canvas.captureStream) {
-      setStatus('Your browser cannot record canvas video. Try an updated Chrome browser.', 'Unsupported');
-      return;
-    }
-    if (!Number.isFinite(video.duration) || video.duration <= 0) {
-      setStatus('Could not read the video duration.', 'Error');
-      return;
-    }
+ video.muted=false;
+}
 
-    try {
-      setBusy(true);
-      stopRequested = false;
-      chunks = [];
-      setProgress(0);
-      releaseDownload();
-      setStatus('Preparing video…', 'Preparing');
-      setupCanvas();
-      video.pause();
-      video.currentTime = 0;
+startBtn.addEventListener('click',startProcessing);
+stopBtn.addEventListener('click',stopProcessing);
 
-      await new Promise((resolve, reject) => {
-        if (video.readyState >= 2) return resolve();
-        const done = () => { cleanup(); resolve(); };
-        const bad = () => { cleanup(); reject(new Error('Could not decode this video.')); };
-        const cleanup = () => {
-          video.removeEventListener('loadeddata', done);
-          video.removeEventListener('error', bad);
-        };
-        video.addEventListener('loadeddata', done, { once: true });
-        video.addEventListener('error', bad, { once: true });
-      });
+clearBtn.addEventListener('click',()=>{
+ if(processing)return;
 
-      drawCartoonFrame();
+ video.pause();
+ video.onended=null;
+ video.removeAttribute('src');
+ video.load();
 
-      const stream = canvas.captureStream(30);
-      audioAdded = false;
-      const captureAudio = video.captureStream || video.mozCaptureStream;
-      if (captureAudio) {
-        try {
-          const sourceStream = captureAudio.call(video);
-          sourceStream.getAudioTracks().forEach(track => {
-            stream.addTrack(track);
-            audioAdded = true;
-          });
-        } catch (e) {
-          audioAdded = false;
-        }
-      }
+ if(objectUrl)URL.revokeObjectURL(objectUrl);
+ objectUrl=null;
 
-      const mimeType = pickMimeType();
-      recorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
-      recorder.ondataavailable = e => {
-        if (e.data && e.data.size) chunks.push(e.data);
-      };
-      recorder.onerror = () => fail('Recording failed. Try a shorter video or lower resolution.');
+ fileInput.value='';
+ fileInfo.style.display='none';
 
-      recorder.onstop = () => {
-        if (animationId) cancelAnimationFrame(animationId);
-        animationId = null;
-        stream.getTracks().forEach(track => {
-          try { track.stop(); } catch (e) {}
-        });
-        video.muted = false;
+ video.classList.add('hidden');
+ videoPlaceholder.classList.remove('hidden');
+ canvas.classList.add('hidden');
+ outputPlaceholder.classList.remove('hidden');
 
-        if (stopRequested) {
-          setBusy(false);
-          setProgress(0);
-          setStatus('Stopped. Try a shorter video or lower resolution.', 'Stopped');
-          return;
-        }
+ startBtn.disabled=true;
+ clearBtn.disabled=true;
 
-        const blob = new Blob(chunks, {
-          type: recorder.mimeType || 'video/webm'
-        });
-        if (!blob.size) {
-          setBusy(false);
-          setStatus('No output was created. Try another browser or video.', 'Failed');
-          return;
-        }
+ releaseDownload();
+ setProgress(0);
 
-        releaseDownload();
-        downloadUrl = URL.createObjectURL(blob);
-        downloadLink.href = downloadUrl;
-        downloadLink.download = 'cartoon-video.webm';
-        downloadLink.classList.remove('hidden');
-        setProgress(100);
-        elapsed.textContent = formatTime(video.duration) + ' / ' + formatTime(video.duration);
-        setBusy(false);
-        setStatus(
-          'Done! Your cartoon video is ready.' +
-          (audioAdded ? ' Audio was included where supported.' : ' Audio capture was not available in this browser.'),
-          'Complete'
-        );
-        canvas.classList.remove('hidden');
-        outputPlaceholder.classList.add('hidden');
-      };
+ elapsed.textContent='00:00 / 00:00';
+ setStatus('Choose a video to get started.','Ready');
+});
 
-      recorder.start(1000);
-      setStatus('Processing video frames. Keep this tab open.', 'Processing');
-      video.muted = false;
-      video.currentTime = 0;
-      await video.play();
+window.addEventListener('beforeunload',()=>{
+ if(objectUrl)URL.revokeObjectURL(objectUrl);
+ if(downloadUrl)URL.revokeObjectURL(downloadUrl);
+ cleanupStream();
+});
 
-      animationId = requestAnimationFrame(tick);
-      video.onended = () => {
-        if (processing && recorder && recorder.state !== 'inactive') {
-          if (animationId) cancelAnimationFrame(animationId);
-          animationId = null;
-          try { drawCartoonFrame(); } catch (e) {}
-          recorder.stop();
-        }
-      };
-    } catch (e) {
-      fail(e.message || 'Could not start processing.');
-    }
-  }
-
-  function fail(message) {
-    if (animationId) cancelAnimationFrame(animationId);
-    animationId = null;
-    if (recorder && recorder.state !== 'inactive') {
-      stopRequested = true;
-      try { recorder.stop(); } catch (e) {}
-    } else {
-      setBusy(false);
-      setStatus(message, 'Failed');
-    }
-    video.pause();
-    video.muted = false;
-  }
-
-  function stopProcessing() {
-    if (!processing) return;
-    stopRequested = true;
-    if (animationId) cancelAnimationFrame(animationId);
-    animationId = null;
-    video.pause();
-    video.onended = null;
-    if (recorder && recorder.state !== 'inactive') {
-      try { recorder.stop(); } catch (e) { setBusy(false); }
-    } else {
-      setBusy(false);
-      setStatus('Processing stopped.', 'Stopped');
-    }
-    video.muted = false;
-  }
-
-  startBtn.addEventListener('click', startProcessing);
-  stopBtn.addEventListener('click', stopProcessing);
-
-  clearBtn.addEventListener('click', () => {
-    if (processing) return;
-    video.pause();
-    video.removeAttribute('src');
-    video.load();
-    if (objectUrl) URL.revokeObjectURL(objectUrl);
-    objectUrl = null;
-    fileInput.value = '';
-    fileInfo.style.display = 'none';
-    video.classList.add('hidden');
-    videoPlaceholder.classList.remove('hidden');
-    canvas.classList.add('hidden');
-    outputPlaceholder.classList.remove('hidden');
-    startBtn.disabled = true;
-    clearBtn.disabled = true;
-    releaseDownload();
-    setProgress(0);
-    elapsed.textContent = '00:00 / 00:00';
-    setStatus('Choose a video to get started.', 'Ready');
-  });
-
-  window.addEventListener('beforeunload', () => {
-    if (objectUrl) URL.revokeObjectURL(objectUrl);
-    if (downloadUrl) URL.revokeObjectURL(downloadUrl);
-  });
 })();
 </script>
 </body>
