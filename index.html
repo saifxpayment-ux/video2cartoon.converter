@@ -1,64 +1,685 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Toonify AI — Video Cartoon Studio</title>
+<meta name="theme-color" content="#0b1020">
+<title>VideoToCartoon — Free Cartoon Converter</title>
+
 <style>
-:root{color-scheme:dark;--bg:#0b1020;--panel:#151c32;--line:#2b3656;--text:#f4f6ff;--muted:#aab4d2;--accent:#9b7bff;--accent2:#55dfc2}
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:radial-gradient(ellipse at top right,#27205a 0,transparent 38%),var(--bg);color:var(--text)}
-main{max-width:1000px;margin:auto;padding:28px 18px 60px}.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:52px}.logo{font-weight:800;font-size:1.2rem;letter-spacing:-.04em}.logo span{color:var(--accent2)}.pill{border:1px solid var(--line);border-radius:99px;padding:8px 12px;color:var(--muted);font-size:.8rem}
-.hero{text-align:center;margin-bottom:32px}.eyebrow{color:var(--accent2);font-weight:700;font-size:.8rem;letter-spacing:.12em;text-transform:uppercase}.hero h1{font-size:clamp(2.2rem,6vw,4rem);line-height:1.05;letter-spacing:-.055em;margin:14px 0}.hero h1 em{font-style:normal;color:#b9a5ff}.hero p{color:var(--muted);max-width:620px;margin:0 auto;line-height:1.7}
-.panel{background:rgba(21,28,50,.92);border:1px solid var(--line);border-radius:24px;padding:22px;box-shadow:0 18px 70px #0003}.drop{border:1.5px dashed #59648a;border-radius:18px;padding:28px 16px;text-align:center;background:#10172a}.drop strong{display:block;font-size:1.1rem;margin:10px 0}.drop p{color:var(--muted);font-size:.9rem}.upload-icon{font-size:2rem}.btn{display:inline-flex;justify-content:center;align-items:center;border:0;border-radius:12px;padding:12px 18px;background:linear-gradient(100deg,var(--accent),#6f8cff);color:white;font-weight:800;cursor:pointer}.btn:disabled{opacity:.45;cursor:not-allowed}.controls{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}.field label{display:block;color:var(--muted);font-size:.85rem;margin-bottom:8px}.field select,.field input{width:100%;padding:12px;border-radius:11px;background:#0d1427;border:1px solid var(--line);color:var(--text)}.actions{display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:22px}.status{color:var(--muted);font-size:.9rem;text-align:center;margin-top:16px;min-height:24px}.preview{margin-top:18px;display:none}.preview video{width:100%;max-height:360px;border-radius:14px;background:#05070d}.note{font-size:.82rem;color:var(--muted);line-height:1.6;text-align:center;margin:18px auto 0;max-width:680px}.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:22px}.step{border:1px solid var(--line);border-radius:15px;padding:16px}.step b{display:block;margin:8px 0}.step span{color:var(--muted);font-size:.85rem;line-height:1.5}@media(max-width:650px){.controls,.steps{grid-template-columns:1fr}.nav{margin-bottom:38px}.panel{padding:14px}.hero{margin-bottom:24px}}
+:root {
+  color-scheme: dark;
+  --bg: #0b1020;
+  --panel: #151e32;
+  --line: #303d5b;
+  --text: #f4f7ff;
+  --muted: #aab6cf;
+  --accent: #a99aff;
+  --mint: #70ebca;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at top, #25234b, var(--bg) 65%);
+  color: var(--text);
+  font: 16px/1.5 system-ui, Arial, sans-serif;
+}
+.wrap { width: min(1050px, 94%); margin: auto; }
+header { padding: 24px 0; font-weight: 800; font-size: 20px; }
+.logo { color: var(--mint); }
+.hero { text-align: center; padding: 24px 0 30px; }
+h1 { font-size: clamp(32px, 6vw, 58px); line-height: 1.1; margin: 14px 0; }
+.gradient {
+  color: var(--mint);
+}
+.hero p, .notice { color: var(--muted); max-width: 760px; margin: 12px auto; }
+.notice { font-size: 13px; }
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px;
+  min-width: 0;
+}
+h2 { font-size: 19px; margin: 0 0 8px; }
+.sub, .tip { color: var(--muted); font-size: 13px; }
+.drop {
+  display: block;
+  text-align: center;
+  padding: 25px 12px;
+  border: 2px dashed #647297;
+  border-radius: 14px;
+  background: #0c1427;
+  cursor: pointer;
+}
+.drop strong, .drop small { display: block; }
+.drop small { color: var(--muted); margin-top: 7px; }
+#videoFile { display: none; }
+.fileinfo {
+  display: none;
+  overflow-wrap: anywhere;
+  margin-top: 10px;
+  padding: 10px;
+  background: #0b1222;
+  border-radius: 9px;
+}
+.settings {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 18px;
+}
+label.field { display: block; font-size: 13px; }
+select, input[type=range] { width: 100%; margin-top: 7px; }
+select {
+  padding: 10px;
+  border-radius: 9px;
+  background: #0b1222;
+  color: white;
+  border: 1px solid var(--line);
+}
+input[type=range] { accent-color: var(--mint); }
+.actions, .resultrow { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+button, .download {
+  border: 0;
+  border-radius: 10px;
+  padding: 12px 15px;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+}
+.primary, .download {
+  background: linear-gradient(100deg, var(--accent), var(--mint));
+  color: #091321;
+  flex: 1;
+}
+.secondary { background: #293650; color: white; }
+button:disabled { opacity: .45; cursor: not-allowed; }
+.previewbox {
+  min-height: 180px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #050811;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.previewbox video, .previewbox canvas {
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  object-fit: contain;
+}
+.placeholder { text-align: center; padding: 30px 12px; color: #9aa8c4; }
+.previewlabel { color: var(--muted); font-size: 12px; margin: 14px 0 7px; }
+.progressline {
+  height: 10px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #080e1b;
+  margin: 9px 0;
+}
+.progressbar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, var(--accent), var(--mint));
+  transition: width .15s;
+}
+.row { display: flex; justify-content: space-between; gap: 8px; }
+.progressmeta { color: var(--muted); font-size: 12px; }
+.status { margin-top: 8px; font-size: 13px; min-height: 24px; }
+.adbox, .feature {
+  border: 1px dashed #46516d;
+  background: #111a2c;
+  border-radius: 13px;
+  padding: 16px;
+  margin: 18px 0;
+  text-align: center;
+  color: var(--muted);
+  font-size: 13px;
+}
+.features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.feature { text-align: left; border-style: solid; margin: 0 0 18px; }
+.feature strong { display: block; color: white; margin-bottom: 6px; }
+footer { padding: 8px 0 30px; color: var(--muted); font-size: 12px; }
+.hidden { display: none !important; }
+@media(max-width:760px) {
+  .layout, .features { grid-template-columns: 1fr; }
+}
+@media(max-width:420px) {
+  .settings { grid-template-columns: 1fr; }
+  .panel { padding: 14px; }
+}
 </style>
 </head>
+
 <body>
-<main>
-  <div class="nav"><div class="logo">✨ Toonify<span>AI</span></div><div class="pill">BETA · Video cartoon studio</div></div>
-  <section class="hero">
-    <div class="eyebrow">Your video, reimagined</div>
-    <h1>Turn real videos into<br><em>3D cartoon worlds.</em></h1>
-    <p>Upload a clip, choose a look, and prepare it for AI-powered stylization. Start with a short test clip for the best results.</p>
-  </section>
-  <section class="panel">
-    <div class="drop">
-      <div class="upload-icon">🎬</div>
-      <strong>Choose a video to transform</strong>
-      <p>MP4, MOV or WebM · For the first test, use a short clip under 20 MB.</p>
-      <input id="videoFile" type="file" accept="video/mp4,video/quicktime,video/webm,video/*" hidden>
-      <button class="btn" id="chooseBtn">Choose video</button>
-      <div class="preview" id="preview"><video id="videoPreview" controls></video><p id="fileInfo"></p></div>
+<div class="wrap">
+
+<header><span class="logo">✦</span> VideoToCartoon / Free Studio</header>
+
+<section class="hero">
+  <div>✧ FREE BROWSER-BASED CONVERTER</div>
+  <h1>Turn Your Videos Into <span class="gradient">Cartoons</span></h1>
+  <p>Transform your videos with cartoon-style effects while preserving motion, details, and original audio where possible.</p>
+  <div class="notice">
+    Create a fresh visual style for your content. Copyright claims and platform policies may still apply.
+  </div>
+</section>
+
+<main class="layout">
+
+<section class="panel">
+  <h2>1. Choose your video</h2>
+  <p class="sub">Your video is processed locally in this browser. It is not uploaded to our server.</p>
+
+  <label class="drop" id="dropZone" for="videoFile">
+    <div style="font-size:32px">⬆</div>
+    <strong>Tap to upload a video</strong>
+    <small>Choose a video supported by your browser.</small>
+    <small>Long videos depend on your device memory and performance.</small>
+  </label>
+  <input id="videoFile" type="file" accept="video/*">
+  <div class="fileinfo" id="fileInfo"></div>
+
+  <div class="settings">
+    <label class="field">Cartoon style
+      <select id="style">
+        <option value="balanced">Balanced cartoon</option>
+        <option value="soft">Soft illustrated look</option>
+        <option value="bold">Bold outlines</option>
+      </select>
+    </label>
+
+    <label class="field">Output resolution
+      <select id="quality">
+        <option value="720">Up to 720p</option>
+        <option value="540">Up to 540p — faster</option>
+        <option value="480">Up to 480p — lower memory</option>
+      </select>
+    </label>
+
+    <label class="field">Cartoon strength: <span id="strengthVal">55%</span>
+      <input id="strength" type="range" min="20" max="85" value="55">
+    </label>
+
+    <label class="field">Detail preservation: <span id="detailVal">65%</span>
+      <input id="detail" type="range" min="35" max="90" value="65">
+    </label>
+  </div>
+
+  <div class="actions">
+    <button class="primary" id="startBtn" disabled>✦ Start cartoon processing</button>
+    <button class="secondary" id="stopBtn" disabled>Stop</button>
+  </div>
+
+  <div style="margin-top:18px">
+    <div class="row"><strong>Processing progress</strong><strong id="percent">0%</strong></div>
+    <div class="progressline" id="progressTrack" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+      <div class="progressbar" id="progressBar"></div>
     </div>
-    <div class="controls">
-      <div class="field"><label for="style">Cartoon style</label><select id="style"><option value="3d-animated">3D animated movie look</option><option value="anime">Anime</option><option value="2d-cartoon">2D cartoon</option><option value="comic">Comic book</option></select></div>
-      <div class="field"><label for="quality">Output quality</label><select id="quality"><option value="720p">720p · Balanced</option><option value="480p">480p · Faster test</option></select></div>
+    <div class="row progressmeta">
+      <span id="elapsed">00:00 / 00:00</span>
+      <span id="phase">Ready</span>
     </div>
-    <div class="actions"><button class="btn" id="convertBtn" disabled>✨ Prepare cartoon video</button></div>
-    <div class="status" id="status" role="status">Choose a video to get started.</div>
-    <p class="note">Prototype mode: this page previews your upload. AI conversion is not connected yet. Connect a video-to-video AI provider on the backend before enabling real conversion.</p>
-  </section>
-  <section class="steps">
-    <div class="step">① <b>Upload</b><span>Pick a video you own or have permission to use.</span></div>
-    <div class="step">② <b>Stylize</b><span>Connect an AI video-to-video API for the cartoon conversion.</span></div>
-    <div class="step">③ <b>Download</b><span>Preview and download the generated result when the API is connected.</span></div>
-  </section>
+    <div class="status" id="status">Choose a video to get started.</div>
+  </div>
+
+  <p class="tip">Keep this tab open during processing. If a long video fails, try a lower resolution.</p>
+</section>
+
+<section class="panel">
+  <h2>2. Preview & download</h2>
+  <p class="sub">Watch the video and see the cartoon effect while it processes.</p>
+
+  <div class="previewlabel">VIDEO PREVIEW</div>
+  <div class="previewbox">
+    <div class="placeholder" id="videoPlaceholder">▶<br>Your video preview will appear here</div>
+    <video id="sourceVideo" controls playsinline class="hidden"></video>
+  </div>
+
+  <div class="previewlabel">CARTOON OUTPUT</div>
+  <div class="previewbox">
+    <div class="placeholder" id="outputPlaceholder">✧<br>Your cartoon output will appear here</div>
+    <canvas id="outputCanvas" class="hidden"></canvas>
+  </div>
+
+  <div class="resultrow">
+    <a id="downloadLink" class="download hidden" download="cartoon-video.webm">⬇ Download cartoon video</a>
+    <button id="clearBtn" class="secondary" disabled>Clear video</button>
+  </div>
+  <p class="tip">Output is WebM when supported. Original audio capture depends on your browser.</p>
+</section>
+
 </main>
+
+<div class="adbox">
+  <strong>ADVERTISEMENT SPACE</strong><br>
+  Ad network integration can be added after approval. This placeholder does not show paid ads or generate revenue.
+</div>
+
+<section class="features">
+  <div class="feature"><strong>🔒 Private by design</strong>Processing happens on your device.</div>
+  <div class="feature"><strong>🎞 Motion & audio</strong>Records the canvas in real time and attempts to keep original audio.</div>
+  <div class="feature"><strong>🆓 No paid API</strong>No paid API or server is used. Speed depends on your device.</div>
+</section>
+
+<footer>
+  <p><strong>Important:</strong> This free version uses a real-time, non-AI cartoon-style filter. It does not create a full AI/Pixar-style transformation.</p>
+  <p>A cartoon effect does not guarantee that a video is copyright-free or that platforms will not issue claims. Upload only content you own or have permission to use.</p>
+</footer>
+
+</div>
+
 <script>
-const fileInput=document.getElementById('videoFile'),chooseBtn=document.getElementById('chooseBtn'),convertBtn=document.getElementById('convertBtn'),statusEl=document.getElementById('status'),preview=document.getElementById('preview'),videoPreview=document.getElementById('videoPreview'),fileInfo=document.getElementById('fileInfo');
-let selectedFile=null,objectUrl=null;
-chooseBtn.addEventListener('click',()=>fileInput.click());
-fileInput.addEventListener('change',()=>{
-  const file=fileInput.files?.[0]; if(!file)return;
-  if(!file.type.startsWith('video/')){statusEl.textContent='Please choose a video file.';return;}
-  if(file.size>20*1024*1024){statusEl.textContent='For this prototype, please choose a video under 20 MB.';fileInput.value='';return;}
-  selectedFile=file; if(objectUrl)URL.revokeObjectURL(objectUrl); objectUrl=URL.createObjectURL(file);
-  videoPreview.src=objectUrl;preview.style.display='block';fileInfo.textContent=`${file.name} · ${(file.size/1024/1024).toFixed(1)} MB`;
-  convertBtn.disabled=false;statusEl.textContent='Video ready. Real AI conversion needs an API connection.';
-});
-convertBtn.addEventListener('click',()=>{
-  if(!selectedFile)return;
-  statusEl.textContent='Prototype only: upload preview works, but AI conversion is not connected yet. Connect a backend video-to-video API to enable this action.';
-});
+(() => {
+  const fileInput = document.getElementById('videoFile');
+  const dropZone = document.getElementById('dropZone');
+  const fileInfo = document.getElementById('fileInfo');
+  const video = document.getElementById('sourceVideo');
+  const canvas = document.getElementById('outputCanvas');
+  const ctx = canvas.getContext('2d', { willReadFrequently: true });
+  const startBtn = document.getElementById('startBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const clearBtn = document.getElementById('clearBtn');
+  const status = document.getElementById('status');
+  const percent = document.getElementById('percent');
+  const progressBar = document.getElementById('progressBar');
+  const progressTrack = document.getElementById('progressTrack');
+  const elapsed = document.getElementById('elapsed');
+  const phase = document.getElementById('phase');
+  const downloadLink = document.getElementById('downloadLink');
+  const videoPlaceholder = document.getElementById('videoPlaceholder');
+  const outputPlaceholder = document.getElementById('outputPlaceholder');
+  const strengthInput = document.getElementById('strength');
+  const detailInput = document.getElementById('detail');
+  const strengthVal = document.getElementById('strengthVal');
+  const detailVal = document.getElementById('detailVal');
+  const qualitySelect = document.getElementById('quality');
+  const styleSelect = document.getElementById('style');
+
+  let objectUrl = null;
+  let downloadUrl = null;
+  let recorder = null;
+  let chunks = [];
+  let animationId = null;
+  let processing = false;
+  let stopRequested = false;
+  let lastDraw = 0;
+  let width = 0, height = 0;
+  let audioAdded = false;
+
+  function formatTime(seconds) {
+    if (!Number.isFinite(seconds) || seconds < 0) seconds = 0;
+    seconds = Math.floor(seconds);
+    return String(Math.floor(seconds / 60)).padStart(2, '0') + ':' +
+      String(seconds % 60).padStart(2, '0');
+  }
+
+  function setProgress(value) {
+    const n = Math.max(0, Math.min(100, Math.floor(value || 0)));
+    percent.textContent = n + '%';
+    progressBar.style.width = n + '%';
+    progressTrack.setAttribute('aria-valuenow', String(n));
+  }
+
+  function setStatus(message, phaseText) {
+    status.textContent = message;
+    if (phaseText) phase.textContent = phaseText;
+  }
+
+  function setBusy(busy) {
+    processing = busy;
+    startBtn.disabled = busy || !video.src;
+    stopBtn.disabled = !busy;
+    clearBtn.disabled = busy || !video.src;
+    fileInput.disabled = busy;
+    strengthInput.disabled = busy;
+    detailInput.disabled = busy;
+    qualitySelect.disabled = busy;
+    styleSelect.disabled = busy;
+    dropZone.style.pointerEvents = busy ? 'none' : '';
+  }
+
+  function releaseDownload() {
+    if (downloadUrl) URL.revokeObjectURL(downloadUrl);
+    downloadUrl = null;
+    downloadLink.removeAttribute('href');
+    downloadLink.classList.add('hidden');
+  }
+
+  function loadFile(file) {
+    if (!file || processing) return;
+    if (!file.type.startsWith('video/')) {
+      setStatus('Please choose a video file.', 'Invalid file');
+      return;
+    }
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    releaseDownload();
+    objectUrl = URL.createObjectURL(file);
+    video.src = objectUrl;
+    video.load();
+    video.classList.remove('hidden');
+    videoPlaceholder.classList.add('hidden');
+    fileInfo.style.display = 'block';
+    fileInfo.textContent = file.name + ' • ' + (file.size / 1048576).toFixed(1) + ' MB';
+    canvas.classList.add('hidden');
+    outputPlaceholder.classList.remove('hidden');
+    startBtn.disabled = true;
+    clearBtn.disabled = false;
+    setProgress(0);
+    setStatus('Loading video metadata…', 'Loading');
+  }
+
+  fileInput.addEventListener('change', () => {
+    loadFile(fileInput.files && fileInput.files[0]);
+  });
+
+  dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.style.borderColor = '#70ebca';
+  });
+  dropZone.addEventListener('dragleave', () => dropZone.style.borderColor = '');
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.style.borderColor = '';
+    if (e.dataTransfer.files.length) loadFile(e.dataTransfer.files[0]);
+  });
+
+  video.addEventListener('loadedmetadata', () => {
+    startBtn.disabled = false;
+    elapsed.textContent = '00:00 / ' + formatTime(video.duration);
+    setStatus('Video ready. Choose your settings and start.', 'Ready');
+  });
+
+  video.addEventListener('error', () => {
+    startBtn.disabled = true;
+    setStatus('This video format is not supported. Try MP4/H.264 or WebM.', 'Video error');
+  });
+
+  strengthInput.addEventListener('input', () => {
+    strengthVal.textContent = strengthInput.value + '%';
+  });
+  detailInput.addEventListener('input', () => {
+    detailVal.textContent = detailInput.value + '%';
+  });
+
+  const frameCanvas = document.createElement('canvas');
+  const frameCtx = frameCanvas.getContext('2d', { willReadFrequently: true });
+
+  function setupCanvas() {
+    const maxWidth = Number(qualitySelect.value) || 720;
+    const scale = Math.min(1, maxWidth / video.videoWidth);
+    width = Math.max(2, Math.floor(video.videoWidth * scale / 2) * 2);
+    height = Math.max(2, Math.floor(video.videoHeight * scale / 2) * 2);
+    canvas.width = width;
+    canvas.height = height;
+    frameCanvas.width = width;
+    frameCanvas.height = height;
+    canvas.classList.remove('hidden');
+    outputPlaceholder.classList.add('hidden');
+  }
+
+  function drawCartoonFrame() {
+    if (video.readyState < 2 || !width || !height) return;
+    frameCtx.drawImage(video, 0, 0, width, height);
+    const image = frameCtx.getImageData(0, 0, width, height);
+    const data = image.data;
+    const original = new Uint8ClampedArray(data);
+    const strength = Number(strengthInput.value) / 100;
+    const detail = Number(detailInput.value) / 100;
+    const style = styleSelect.value;
+    const levels = Math.max(5, Math.round(15 - strength * 8 + detail * 4));
+    const threshold = style === 'bold' ? 20 : style === 'soft' ? 42 : 31;
+    const step = 4;
+
+    for (let y = 0; y < height; y += step) {
+      for (let x = 0; x < width; x += step) {
+        const i = (y * width + x) * 4;
+        const r = original[i], g = original[i + 1], b = original[i + 2];
+        const lum = .299 * r + .587 * g + .114 * b;
+        const q = 256 / levels;
+        const mix = (style === 'soft' ? .28 : .48) + strength * .25;
+        const qr = r * (1 - mix) + Math.round(r / q) * q * mix;
+        const qg = g * (1 - mix) + Math.round(g / q) * q * mix;
+        const qb = b * (1 - mix) + Math.round(b / q) * q * mix;
+        const ri = (y * width + Math.min(width - 1, x + step)) * 4;
+        const di = (Math.min(height - 1, y + step) * width + x) * 4;
+        const lr = .299 * original[ri] + .587 * original[ri + 1] + .114 * original[ri + 2];
+        const ld = .299 * original[di] + .587 * original[di + 1] + .114 * original[di + 2];
+        const edge = Math.abs(lum - lr) + Math.abs(lum - ld);
+        const line = Math.max(0, Math.min(.7, (edge - threshold) / 100)) *
+          (style === 'bold' ? .9 : .6) * strength;
+
+        for (let dy = 0; dy < step && y + dy < height; dy++) {
+          for (let dx = 0; dx < step && x + dx < width; dx++) {
+            const j = ((y + dy) * width + x + dx) * 4;
+            const preserve = detail * .25;
+            data[j] = qr * (1 - line) * (1 - preserve) + original[j] * preserve;
+            data[j + 1] = qg * (1 - line) * (1 - preserve) + original[j + 1] * preserve;
+            data[j + 2] = qb * (1 - line) * (1 - preserve) + original[j + 2] * preserve;
+            data[j + 3] = original[j + 3];
+          }
+        }
+      }
+    }
+    ctx.putImageData(image, 0, 0);
+  }
+
+  function tick(now) {
+    if (!processing) return;
+    if (now - lastDraw >= 30) {
+      try {
+        drawCartoonFrame();
+        lastDraw = now;
+      } catch (e) {
+        fail('Could not process a frame. Try a lower resolution.');
+        return;
+      }
+    }
+    if (Number.isFinite(video.duration) && video.duration > 0) {
+      setProgress(Math.min(99, video.currentTime / video.duration * 100));
+      elapsed.textContent = formatTime(video.currentTime) + ' / ' + formatTime(video.duration);
+    }
+    animationId = requestAnimationFrame(tick);
+  }
+
+  function pickMimeType() {
+    if (!window.MediaRecorder) return '';
+    const types = [
+      'video/webm;codecs=vp9,opus',
+      'video/webm;codecs=vp8,opus',
+      'video/webm'
+    ];
+    return types.find(t => MediaRecorder.isTypeSupported(t)) || '';
+  }
+
+  async function startProcessing() {
+    if (!video.src || processing) return;
+    if (!window.MediaRecorder || !canvas.captureStream) {
+      setStatus('Your browser cannot record canvas video. Try an updated Chrome browser.', 'Unsupported');
+      return;
+    }
+    if (!Number.isFinite(video.duration) || video.duration <= 0) {
+      setStatus('Could not read the video duration.', 'Error');
+      return;
+    }
+
+    try {
+      setBusy(true);
+      stopRequested = false;
+      chunks = [];
+      setProgress(0);
+      releaseDownload();
+      setStatus('Preparing video…', 'Preparing');
+      setupCanvas();
+      video.pause();
+      video.currentTime = 0;
+
+      await new Promise((resolve, reject) => {
+        if (video.readyState >= 2) return resolve();
+        const done = () => { cleanup(); resolve(); };
+        const bad = () => { cleanup(); reject(new Error('Could not decode this video.')); };
+        const cleanup = () => {
+          video.removeEventListener('loadeddata', done);
+          video.removeEventListener('error', bad);
+        };
+        video.addEventListener('loadeddata', done, { once: true });
+        video.addEventListener('error', bad, { once: true });
+      });
+
+      drawCartoonFrame();
+
+      const stream = canvas.captureStream(30);
+      audioAdded = false;
+      const captureAudio = video.captureStream || video.mozCaptureStream;
+      if (captureAudio) {
+        try {
+          const sourceStream = captureAudio.call(video);
+          sourceStream.getAudioTracks().forEach(track => {
+            stream.addTrack(track);
+            audioAdded = true;
+          });
+        } catch (e) {
+          audioAdded = false;
+        }
+      }
+
+      const mimeType = pickMimeType();
+      recorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
+      recorder.ondataavailable = e => {
+        if (e.data && e.data.size) chunks.push(e.data);
+      };
+      recorder.onerror = () => fail('Recording failed. Try a shorter video or lower resolution.');
+
+      recorder.onstop = () => {
+        if (animationId) cancelAnimationFrame(animationId);
+        animationId = null;
+        stream.getTracks().forEach(track => {
+          try { track.stop(); } catch (e) {}
+        });
+        video.muted = false;
+
+        if (stopRequested) {
+          setBusy(false);
+          setProgress(0);
+          setStatus('Stopped. Try a shorter video or lower resolution.', 'Stopped');
+          return;
+        }
+
+        const blob = new Blob(chunks, {
+          type: recorder.mimeType || 'video/webm'
+        });
+        if (!blob.size) {
+          setBusy(false);
+          setStatus('No output was created. Try another browser or video.', 'Failed');
+          return;
+        }
+
+        releaseDownload();
+        downloadUrl = URL.createObjectURL(blob);
+        downloadLink.href = downloadUrl;
+        downloadLink.download = 'cartoon-video.webm';
+        downloadLink.classList.remove('hidden');
+        setProgress(100);
+        elapsed.textContent = formatTime(video.duration) + ' / ' + formatTime(video.duration);
+        setBusy(false);
+        setStatus(
+          'Done! Your cartoon video is ready.' +
+          (audioAdded ? ' Audio was included where supported.' : ' Audio capture was not available in this browser.'),
+          'Complete'
+        );
+        canvas.classList.remove('hidden');
+        outputPlaceholder.classList.add('hidden');
+      };
+
+      recorder.start(1000);
+      setStatus('Processing video frames. Keep this tab open.', 'Processing');
+      video.muted = false;
+      video.currentTime = 0;
+      await video.play();
+
+      animationId = requestAnimationFrame(tick);
+      video.onended = () => {
+        if (processing && recorder && recorder.state !== 'inactive') {
+          if (animationId) cancelAnimationFrame(animationId);
+          animationId = null;
+          try { drawCartoonFrame(); } catch (e) {}
+          recorder.stop();
+        }
+      };
+    } catch (e) {
+      fail(e.message || 'Could not start processing.');
+    }
+  }
+
+  function fail(message) {
+    if (animationId) cancelAnimationFrame(animationId);
+    animationId = null;
+    if (recorder && recorder.state !== 'inactive') {
+      stopRequested = true;
+      try { recorder.stop(); } catch (e) {}
+    } else {
+      setBusy(false);
+      setStatus(message, 'Failed');
+    }
+    video.pause();
+    video.muted = false;
+  }
+
+  function stopProcessing() {
+    if (!processing) return;
+    stopRequested = true;
+    if (animationId) cancelAnimationFrame(animationId);
+    animationId = null;
+    video.pause();
+    video.onended = null;
+    if (recorder && recorder.state !== 'inactive') {
+      try { recorder.stop(); } catch (e) { setBusy(false); }
+    } else {
+      setBusy(false);
+      setStatus('Processing stopped.', 'Stopped');
+    }
+    video.muted = false;
+  }
+
+  startBtn.addEventListener('click', startProcessing);
+  stopBtn.addEventListener('click', stopProcessing);
+
+  clearBtn.addEventListener('click', () => {
+    if (processing) return;
+    video.pause();
+    video.removeAttribute('src');
+    video.load();
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    objectUrl = null;
+    fileInput.value = '';
+    fileInfo.style.display = 'none';
+    video.classList.add('hidden');
+    videoPlaceholder.classList.remove('hidden');
+    canvas.classList.add('hidden');
+    outputPlaceholder.classList.remove('hidden');
+    startBtn.disabled = true;
+    clearBtn.disabled = true;
+    releaseDownload();
+    setProgress(0);
+    elapsed.textContent = '00:00 / 00:00';
+    setStatus('Choose a video to get started.', 'Ready');
+  });
+
+  window.addEventListener('beforeunload', () => {
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+    if (downloadUrl) URL.revokeObjectURL(downloadUrl);
+  });
+})();
 </script>
 </body>
 </html>
